@@ -11,7 +11,7 @@ The contract uses ERC20 tokens.
 
 The maximum number of tokens per wallet is defaulted to 690000000 tokens (assuming 18 decimal places).
 
-The initial price per token is calculated based on the maximum tokens per wallet, specifically, 1 ether divided by the maximum tokens per wallet.
+The initial price per token is calculated based on the maximum tokens per wallet, specifically, 1 ether divided by the maximum tokens per wallet. (i.e. full allocation = 1 ETH)
 
 The minimum buy value is defaulted to 0.01 ether.
 
