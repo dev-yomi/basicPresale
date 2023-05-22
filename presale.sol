@@ -50,3 +50,5 @@ contract Presale is ReentrancyGuard {
         _;
     }
 }
+
+//TODO: Add function yo update owner/pricePerToken/max values etc
