@@ -8,7 +8,7 @@ contract Presale is ReentrancyGuard {
     ERC20 token;
 
     uint256 maxTokensPerWallet = 690000000 ether;
-    uint256 pricePerToken = 1e18 / maxTokensPerWallet;
+    uint256 tokensPerEth = maxTokensPerWallet; // Here, we assume 1 ETH will give maxTokensPerWallet tokens.
     uint256 minimumBuy = 0.01 ether;
 
     bool public isOpen;
@@ -26,7 +26,7 @@ contract Presale is ReentrancyGuard {
     function buy() public payable nonReentrant {
         require(isOpen, "Sale not open!");
         require(msg.value >= minimumBuy, "You must buy at least 0.01 Eth worth of tokens!");
-        uint256 amountOfTokens = msg.value / pricePerToken;
+        uint256 amountOfTokens = (msg.value * tokensPerEth) / 1e18;
         require(userBalances[msg.sender] + amountOfTokens <= maxTokensPerWallet, "That will exceed the max allocation!");
         require(token.balanceOf(address(this)) >= amountOfTokens, "Not enough tokens left!");
         userBalances[msg.sender] += amountOfTokens;
@@ -41,8 +41,8 @@ contract Presale is ReentrancyGuard {
         isOpen = !isOpen;
     }
 
-    function adjustPricePerToken(uint256 _pricePerToken) external onlyOwner {
-        pricePerToken = _pricePerToken;
+    function adjustTokensPerEth(uint256 _tokensPerEth) external onlyOwner { // Renamed to adjustTokensPerEth
+        tokensPerEth = _tokensPerEth;
     }
 
     modifier onlyOwner() {
@@ -50,5 +50,3 @@ contract Presale is ReentrancyGuard {
         _;
     }
 }
-
-//TODO: Add function yo update owner/pricePerToken/max values etc
